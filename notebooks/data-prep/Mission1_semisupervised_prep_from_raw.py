@@ -1,3 +1,12 @@
+import sys
+import os
+
+# 获取项目根目录的绝对路径
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_dir, "../.."))
+# 将项目根目录添加到Python路径
+# sys.path.insert(0, project_root)
+
 import argparse
 import os
 import statistics
@@ -32,6 +41,8 @@ dataset_splits = {"3_months": "2000-04-01",
 test_data_split = "2007-01-01"
 data_raw_folder = parse_args().input_path
 
+# 直接设置E盘数据路径
+# data_raw_folder = r"E:\ESA数据集\ESA-Mission1"
 current_dir = os.path.dirname(os.path.realpath(__file__))
 data_processed_folder = os.path.abspath(os.path.join(current_dir, "../../data/preprocessed"))
 
