@@ -84,7 +84,7 @@ class AlgorithmArgs(argparse.Namespace):
         return dataset, data_columns, anomaly_columns
 
     @staticmethod
-    def get_valid_channels(raw_channels: list[str], data_cols: list[str], sort: bool = False) -> list[str]:
+    def get_valid_channels(raw_channels: List[str], data_cols: List[str], sort: bool = False) -> List[str]:
         if not raw_channels:
             print(f"No channels provided. Using all data columns: {data_cols}")
             valid_channels = data_cols
@@ -108,8 +108,8 @@ class AlgorithmArgs(argparse.Namespace):
         )
 
     @staticmethod
-    def _unravel_global_annotation(dataset: pd.DataFrame, original_anomaly_cols: list[str],
-                                   target_channel_anomaly_cols: list[str]) -> pd.DataFrame:
+    def _unravel_global_annotation(dataset: pd.DataFrame, original_anomaly_cols: List[str],
+                                   target_channel_anomaly_cols: List[str]) -> pd.DataFrame:
         if len(original_anomaly_cols) == 1 and original_anomaly_cols[0] == "is_anomaly":  # Handle datasets with only one global is_anomaly column
             for col in target_channel_anomaly_cols:
                 dataset[col] = dataset["is_anomaly"]

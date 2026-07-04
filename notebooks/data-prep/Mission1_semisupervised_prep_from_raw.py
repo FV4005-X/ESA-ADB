@@ -57,7 +57,9 @@ print(f"Created directories {target_subfolder}")
 
 def process_dataset(dm: DatasetManager, dataset_name: str, split_at: str, resampling_rule=pd.Timedelta(seconds=30)):
 
-    labels_df = pd.read_csv(os.path.join(source_folder, "labels.csv"), parse_dates=["StartTime", "EndTime"], date_parser=lambda x: parse_date(x, ignoretz=True))
+    labels_df = pd.read_csv(os.path.join(source_folder, "labels.csv"))
+    labels_df["StartTime"] = labels_df["StartTime"].apply(lambda x: parse_date(x, ignoretz=True))
+    labels_df["EndTime"] = labels_df["EndTime"].apply(lambda x: parse_date(x, ignoretz=True))
     anomaly_types_df = pd.read_csv(os.path.join(source_folder, "anomaly_types.csv"))
     telecommands_df = pd.read_csv(os.path.join(source_folder, "telecommands.csv"))
     telecommands_min_priority = 3
@@ -98,7 +100,7 @@ def process_dataset(dm: DatasetManager, dataset_name: str, split_at: str, resamp
 
                 # Take derivative of monotonic channels - part of preprocessing
                 if 4 <= int(param.split("_")[1]) <= 11:
-                    param_df.value = np.diff(param_df.value, append=param_df.value[-1])
+                    param_df.value = np.diff(param_df.value, append=param_df.value.iloc[-1])
 
                 # Fill labels
                 is_param_annotated = False
